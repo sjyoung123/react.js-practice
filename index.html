@@ -11,10 +11,13 @@
     src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
     crossorigin
   ></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js
+  "></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
   <script type="text/babel">
     const root = document.getElementById("root");
-    function Btn({ name, onClick }) {
+    function Btn({ name, onClick, fontSize }) {
       console.log(name);
       return (
         <button
@@ -22,13 +25,18 @@
           style={{
             backgroundColor: "tomato",
             color: "white",
+            fontSize,
           }}
         >
           {name}
         </button>
       );
     }
-
+    Btn.propTypes = {
+      name: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+      fontSize: PropTypes.number.isRequired,
+    };
     const MemorizeBtn = React.memo(Btn); //prevent re-render whole things, only change thing.
 
     function App() {
@@ -38,8 +46,8 @@
       };
       return (
         <div>
-          <MemorizeBtn onClick={clickBtn} name={value} />
-          <MemorizeBtn name="2" />
+          <MemorizeBtn onClick={clickBtn} name={value} fontSize={15} />
+          <MemorizeBtn name="2" fontSize={20} />
         </div>
       );
     }
